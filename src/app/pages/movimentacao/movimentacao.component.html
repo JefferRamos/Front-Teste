@@ -1,0 +1,215 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <header>
+    <h1 class="my-2">Movimentações</h1>
+  </header>
+
+  <div class="row">
+    <div class="col-md-5">
+      <input type="text" (keyup)="applyFilter($event)" class="mb" placeholder="Filtrar">
+    </div>
+
+    <div class="col-12 mt">
+      <div class="example-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="navio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Navio</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.navio}}
+          </ng-container>
+
+          <ng-container matColumnDef="tipoMovimentacao">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Movimentação</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.tipoMovimentacao}}
+          </ng-container>
+
+          <ng-container matColumnDef="dtInicio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Início</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.dtInicio}}
+          </ng-container>
+
+          <ng-container matColumnDef="dtFim">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Fim</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.dtFim}}
+          </ng-container>
+
+          <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.categoria}}
+          </ng-container>
+
+          <ng-container matColumnDef="excluir">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Excluir </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button (click)="abreDialogExcluir()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="edit(row)"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="editForm">
+    <div class="col-sm-12 offset-md-8 col-md-4">
+      <button mat-button class="w-100 my" (click)="mostrarFormularioAdd()">Adicionar Novo</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row" *ngIf="addForm">
+    <div class="col-sm-12 mt">
+      <h3>Adicionar Movimentação</h3>
+    </div>
+
+    <form [formGroup]="formMovimentacao" (submit)="enviaFormulario()" class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12 col-md-3">
+          <label for="nome">Navio</label>
+          <input class="my" type="text" id="navio" name="navio" formControlName="navio"
+            (keyup)="retiraEspacoInicial(navio)">
+
+          <mat-error *ngIf="navio.hasError('required') && navio.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+          <mat-error *ngIf="navio.hasError('maxlength') && navio.touched">
+            <small>Máximo 40 dígitos</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+          <label for="tipoMovimentacao">Tipo de Movimentação</label>
+
+          <select name="tipoMovimentacao" id="tipoMovimentacao" formControlName="tipoMovimentacao">
+            <option value=""></option>
+            <option value="embarque">embarque</option>
+            <option value="descarga">descarga</option>
+            <option value="gateIn">gate in</option>
+            <option value="gateOut">gate out</option>
+            <option value="posicionamento">posicionamento</option>
+            <option value="pilha">pilha</option>
+            <option value="pesagem">pesagem</option>
+            <option value="scanner">scanner</option>
+          </select>
+
+          <mat-error *ngIf="tipoMovimentacao.hasError('required') && tipoMovimentacao.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+          <label for="dtInicio">Data de Início</label>
+
+          <input class="my" id="dtInicio" type="date" formControlName="dtInicio">
+
+          <mat-error *ngIf="dtInicio.hasError('required') && dtInicio.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+          <label for="dtFinal">Data Final</label>
+
+          <input class="my" id="dtFinal" type="date" formControlName="dtFim">
+
+          <mat-error *ngIf="dtFim.hasError('required') && dtFim.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-md-9"></div>
+
+        <div class="col-sm-12 col-md-3">
+          <button type="submit" mat-button class="w-100 mt-button" id="btnAdicionarConteiner"
+            [disabled]="formMovimentacao.invalid">
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row" *ngIf="editForm">
+    <div class="col-sm-12 mt">
+      <h3>Editar Movimentação</h3>
+    </div>
+
+    <form [formGroup]="formMovimentacao" (submit)="enviaFormulario()" class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12 col-md-3">
+          <label for="nome">Navio</label>
+          <input class="my" type="text" id="navio" name="navio" formControlName="navio"
+            (keyup)="retiraEspacoInicial(navio)">
+
+          <mat-error *ngIf="navio.hasError('required') && navio.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+          <mat-error *ngIf="navio.hasError('maxlength') && navio.touched">
+            <small>Máximo 40 dígitos</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+          <label for="tipoMovimentacao">Tipo de Movimentação</label>
+
+          <select name="tipoMovimentacao" id="tipoMovimentacao" formControlName="tipoMovimentacao">
+            <option value=""></option>
+            <option value="embarque">embarque</option>
+            <option value="descarga">descarga</option>
+            <option value="gate In">gate in</option>
+            <option value="gate Out">gate out</option>
+            <option value="posicionamento">posicionamento</option>
+            <option value="pilha">pilha</option>
+            <option value="pesagem">pesagem</option>
+            <option value="scanner">scanner</option>
+          </select>
+
+          <mat-error *ngIf="tipoMovimentacao.hasError('required') && tipoMovimentacao.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+          <label for="dtInicio">Data de Início</label>
+
+          <input class="my" id="dtInicio" type="date" formControlName="dtInicio">
+
+          <mat-error *ngIf="dtInicio.hasError('required') && dtInicio.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-3">
+          <label for="dtFinal">Data Final</label>
+
+          <input class="my" id="dtFinal" type="date" formControlName="dtFim">
+
+          <mat-error *ngIf="dtFim.hasError('required') && dtFim.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-md-9"></div>
+
+        <div class="col-sm-12 col-md-3">
+          <button type="submit" mat-button class="w-100 mt-button" id="btnAdicionarConteiner"
+            [disabled]="formMovimentacao.invalid">
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

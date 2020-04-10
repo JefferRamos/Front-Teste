@@ -1,0 +1,239 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <header>
+    <h1 class="my-2">Contêiners</h1>
+  </header>
+
+  <div class="row">
+    <div class="col-md-5">
+      <input type="text" (keyup)="applyFilter($event)" class="mb" placeholder="Filtrar">
+    </div>
+
+    <div class="col-12 mt">
+      <div class="example-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.nome}}
+          </ng-container>
+
+          <ng-container matColumnDef="numCtrl">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Número do Cntr</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.numCtrl}}
+          </ng-container>
+
+          <ng-container matColumnDef="tipo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.tipo}}
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.status}}
+          </ng-container>
+
+          <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.categoria}}
+          </ng-container>
+
+          <ng-container matColumnDef="excluir">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Excluir </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button (click)="abreDialogExcluir()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="edit(row)"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="editForm">
+    <div class="col-sm-12 offset-md-8 col-md-4">
+      <button mat-button class="w-100 my" (click)="mostrarFormularioAdd()">Adicionar Novo</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row" *ngIf="addForm">
+    <div class="col-sm-12 mt">
+      <h3>Adicionar Conteiner</h3>
+    </div>
+
+    <form [formGroup]="formConteiner" (submit)="enviaFormulario()" class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <label for="nome">Nome</label>
+          <input class="my" type="text" id="nome" name="nome" formControlName="nome"
+            (keyup)="retiraEspacoInicial(nome)">
+
+          <mat-error *ngIf="nome.hasError('required') && nome.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+          <mat-error *ngIf="nome.hasError('maxlength') && nome.touched">
+            <small>Máximo 40 dígitos</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+          <label for="numCntr">Número Contêiner</label>
+          <input class="my" type="text" id="numCntr" name="numCntr" formControlName="numCtrl"
+            (keyup)="retiraEspacoInicial(numCtrl)">
+
+          <mat-error *ngIf="numCtrl.hasError('required') && numCtrl.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <label for="tipo">Tipo</label>
+
+          <select name="tipo" id="tipo" formControlName="tipo">
+            <option value=""></option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+          </select>
+
+          <mat-error *ngIf="tipo.hasError('required') && tipo.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <label for="status">Status</label>
+
+          <select name="status" id="status" formControlName="status">
+            <option value=""></option>
+            <option value="cheio">Cheio</option>
+            <option value="vazio">Vazio</option>
+          </select>
+
+          <mat-error *ngIf="status.hasError('required') && status.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <label for="categoria">Categoria</label>
+
+          <select name="categoria" id="categoria" formControlName="categoria">
+            <option value=""></option>
+            <option value="importacao">Importacao</option>
+            <option value="exportacao">Exprtacao</option>
+          </select>
+
+          <mat-error *ngIf="categoria.hasError('required') && categoria.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-md-9"></div>
+
+        <div class="col-sm-12 col-md-3">
+          <button type="submit" mat-button class="w-100 mt-button" id="btnAdicionarConteiner"
+            [disabled]="formConteiner.invalid">
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row" *ngIf="editForm">
+    <div class="col-sm-12 mt">
+      <h3>Editar Contêiner</h3>
+    </div>
+
+    <form [formGroup]="formConteiner" (submit)="enviaFormulario()" class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <label for="nome">Nome</label>
+          <input class="my" type="text" id="nome" name="nome" formControlName="nome"
+            (keyup)="retiraEspacoInicial(nome)">
+
+          <mat-error *ngIf="nome.hasError('required') && nome.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+          <mat-error *ngIf="nome.hasError('maxlength') && nome.touched">
+            <small>Máximo 40 dígitos</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+          <label for="numCntr">Número Contêiner</label>
+          <input class="my" type="text" id="numCntr" name="numCntr" formControlName="numCtrl"
+            (keyup)="retiraEspacoInicial(numCtrl)">
+
+          <mat-error *ngIf="numCtrl.hasError('required') && numCtrl.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <label for="tipo">Tipo</label>
+
+          <select name="tipo" id="tipo" formControlName="tipo">
+            <option value=""></option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+          </select>
+
+          <mat-error *ngIf="tipo.hasError('required') && tipo.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <label for="status">Status</label>
+
+          <select name="status" id="status" formControlName="status">
+            <option value=""></option>
+            <option value="cheio">Cheio</option>
+            <option value="vazio">Vazio</option>
+          </select>
+
+          <mat-error *ngIf="status.hasError('required') && status.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+          <label for="categoria">Categoria</label>
+
+          <select name="categoria" id="categoria" formControlName="categoria">
+            <option value=""></option>
+            <option value="importacao">Importacao</option>
+            <option value="exportacao">Exprtacao</option>
+          </select>
+
+          <mat-error *ngIf="categoria.hasError('required') && categoria.touched">
+            <small>Campo Obrigatório</small>
+          </mat-error>
+        </div>
+
+        <div class="col-md-9"></div>
+
+        <div class="col-sm-12 col-md-3">
+          <button type="submit" mat-button class="w-100 mt-button" id="btnAdicionarConteiner"
+            [disabled]="formConteiner.invalid">
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

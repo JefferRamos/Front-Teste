@@ -1,1 +1,396 @@
-/* You can add global styles to this file, and also import other style files */
+/* @import "~@ng-select/ng-select/themes/ant.design.theme.css"; */
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #6f6f6f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E64415;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #604845;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.my {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.my-2 {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.mx {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.mt {
+  margin-top: 10px !important;
+}
+
+.mt-2 {
+  margin-top: 20px !important;
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}
+
+.mb {
+  margin-bottom: 10px !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-white {
+  color: #fff;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: #485252;
+}
+
+h4 {
+  color: #604845;
+}
+
+hr {
+  border: 1px solid #e5e5e5;
+}
+
+.mat-button {
+  background: #E64415;
+  text-transform: uppercase;
+  color: #fff !important;
+  border: none;
+  border-radius: 0 !important;
+  height: 30px !important;
+  line-height: normal !important;
+}
+
+.mat-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mr-icon {
+  margin-right: 4px;
+}
+
+.mat-button[disabled][disabled] {
+  background: #ccc;
+}
+
+.mt-button {
+  margin-top: 29px !important;
+}
+
+.btn-darker {
+  background: #604845;
+}
+
+.btnModalAdd {
+  background: #E64415;
+  color: #fff;
+  width: 16px;
+  border: none;
+  padding: 0px 5px 1px 5px;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  background: #fff;
+  -webkit-box-shadow: 0 0 0 1px #ddd;
+  -moz-box-shadow: 0 0 0 1px #ddd;
+  box-shadow: 0 0 0 1px #ddd;
+  border: none;
+  color: #524948;
+  height: 30px;
+  width: 100%;
+  padding: 0 1% !important;
+  transition: all 0.3s ease;
+}
+
+textarea {
+  min-height: 60px;
+}
+
+select, textarea {
+  margin: 10px 0;
+}
+
+textarea:disabled {
+  background:#dddddd;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px rgba(244, 67, 54, 0.2) inset !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(244, 67, 54, 0.2) inset !important;
+}
+
+input:focus, textarea:focus, select:focus, .ng-select.ng-select-opened>.ng-select-container {
+  box-shadow: 0 0 7px #E64415;
+  outline: 1px solid #E64415;
+  outline-offset: -1px;
+  border: none;
+}
+
+.small-input {
+  width: 60px;
+
+}
+
+label {
+  color: #604845;
+  font-size: 14px;
+}
+
+mat-radio-group {
+  display: block;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #E64415 !important;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #E64415 !important;
+}
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+  background: #E64415 !important;
+}
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #E64415 !important;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+::-moz-selection {
+  background: #E64415;
+  color: #fff;
+}
+
+::selection {
+  background: #E64415;
+  color: #fff;
+}
+
+.area {
+  float: left;
+  background: linear-gradient(to bottom, #485252 40%, #fff 40%, #fff 100%) fixed;
+  width: 100%;
+  min-height: 100%;
+  padding-left: 60px;
+  padding-bottom: 20px;
+}
+
+.configs {
+  background: #fff;
+  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 576px) {
+  .configs {
+      padding: 10px;
+  }
+}
+
+.bg-gray {
+  background-color: #F7F7F7;
+}
+
+
+.mat-dialog-container {
+  height: auto !important;
+}
+
+/*table e header*/
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header img {
+  height: 55px;
+  margin-top: 5px;
+}
+
+.example-container {
+  height: 300px;
+  overflow: auto;
+  background: #524948;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-table {
+  background: #524948;
+}
+
+.mat-cell, .mat-footer-cell {
+  color: #ddd !important;
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 5px;
+}
+
+tr.mat-header-row {
+  background: #604845;
+}
+
+tr.mat-row:hover {
+  background-color: #E6441550;
+  cursor: pointer;
+}
+
+
+.mat-paginator {
+  background: #524948;
+  color: #fff;
+}
+
+.config-table {
+  background: #524948;
+  padding-top: 10px;
+}
+
+.config-table input {
+  background: transparent;
+  -webkit-box-shadow: 0 0 0 1px #999;
+  -moz-box-shadow: 0 0 0 1px #999;
+  box-shadow: 0 0 0 1px #999;
+  color: #fff;
+  width: 94%;
+}
+
+.config-table input::placeholder {
+  color: #fff;
+}
+
+/*sort */
+.mat-sort-header-button, .mat-sort-header-stem, .mat-sort-header-indicator{
+  color: #fff !important;
+}
+
+.tabela-regular {
+  border-collapse: collapse;
+}
+
+.tabela-regular th{
+  background-color: #E5E5E5;
+  color: #604845;
+  text-align: left;
+  padding: 10px;
+}
+
+.tabela-regular td {
+  padding: 10px;
+}
+
+.tabela-regular tbody tr {
+  border-bottom: 1px solid #DDD;
+}
+
+.tabela-regular .text-red {
+  color: #E64415;
+}
+
+.tabela-regular .sem-borda {
+  border-bottom: none;
+}
+
+.tabela-regular.clicavel tr:hover {
+  background-color: #E6441550;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 340px) {
+  header img {
+      display: none;
+  }
+}
+
+/* snackbar */
+.success-snackbar {
+  background: rgb(3, 155, 0);
+  color: #fff;
+}
+
+.error-snackbar {
+  background: #E64415;
+  color: #fff;
+}
+
+/* progress bar */
+.progress-bar {
+  background-color: #E5E5E5;
+  color: #604845;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar .amarelo, .progress-bar .verde,  .progress-bar .vermelho {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  height: 100%;
+}
+
+.progress-bar .amarelo {
+  background-color: #D0C776;
+}
+
+.progress-bar .verde {
+  background-color: #78D076;
+}
+
+.progress-bar .vermelho {
+  background-color: #d07676;
+}
